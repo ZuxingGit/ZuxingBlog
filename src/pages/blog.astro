@@ -25,8 +25,8 @@ const posts = (
     posts.map((post, i) => (
       <>
         {post.data.date.getFullYear() <
-          (posts[i - 1]?.data.date.getFullYear() || 2077) && (
-          <div class="font-black text-gray-100 text-9xl sm:text-[20rem] relative -z-10 select-none dark:text-gray-900">
+          (posts[i - 1]?.data.date.getFullYear() || 9999) && (
+          <div class="font-black text-blue-300 text-6xl sm:text-[15rem] relative -z-10 select-none dark:text-gray-500">
             {post.data.date.getFullYear()}
           </div>
         )}
