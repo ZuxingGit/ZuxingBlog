@@ -5,17 +5,17 @@ export type Props = {
 const { href } = Astro.props;
 
 const removeAllSlash = (path: string) => {
-  return path.replaceAll('/', '');
+  return path.replaceAll('/', '').toLowerCase();
 };
 const isCurrentPath =
   removeAllSlash(Astro.url.pathname) === removeAllSlash(`${href}`);
 ---
 
 <a
-  href={href}
+  href={href.toLowerCase()}
   class:list={[
     isCurrentPath
-      ? 'text-black dark:text-white'
-      : 'text-gray-400 hover:text-black dark:hover:text-white transition-colors',
+      ? 'text-green-600 dark:text-white font-bold'
+      : 'text-blue-500 hover:text-blue-700 dark:hover:text-white transition-colors font-semibold',
   ]}>{Astro.slots.has('default') ? <slot /> : href}</a
 >

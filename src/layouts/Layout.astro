@@ -66,13 +66,11 @@ const {
       rel="stylesheet"
     />
   </head>
-  <body
-    class="max-w-5xl mx-auto flex flex-col min-h-[100dvh] px-4 dark:bg-black"
-  >
+  <body class="flex flex-col min-h-[100dvh] dark:bg-black">
     <Header />
-    <main class="grow">
+    <main class="grow max-w-5xl mx-auto w-full px-4">
       <slot />
     </main>
-    <Footer />
+    <Footer class="w-full" />
   </body>
 </html>
