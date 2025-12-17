@@ -15,7 +15,7 @@ const isCurrentPath =
   href={href.toLowerCase()}
   class:list={[
     isCurrentPath
-      ? 'text-green-600 dark:text-white font-bold'
-      : 'text-blue-500 hover:text-blue-700 dark:hover:text-white transition-colors font-semibold',
+      ? 'text-white dark:text-white font-bold'
+      : 'text-black hover:text-blue-700 dark:hover:text-white transition-colors font-semibold',
   ]}>{Astro.slots.has('default') ? <slot /> : href}</a
 >
