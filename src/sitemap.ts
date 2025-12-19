@@ -3,7 +3,7 @@ import path from 'path';
 
 import { SITE } from './constants';
 
-export const basePages = ['Blog', 'Tags', 'About', 'Friends'];
+export const basePages = ['/', '/blog', '/tags', '/about', '/friends'];
 
 const blogPages = (await glob('./src/content/blog/*.md')).map(
   (filePath) => '/blog/' + path.parse(filePath).name,
