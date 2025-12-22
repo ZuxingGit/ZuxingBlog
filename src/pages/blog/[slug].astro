@@ -2,6 +2,7 @@
 import { getEntryBySlug } from 'astro:content';
 
 import Comment from '../../components/Comment.astro';
+import LanguageSwitcher from '../../components/LanguageSwitcher.astro';
 import Layout from '../../layouts/Layout.astro';
 
 const { slug } = Astro.params;
@@ -15,6 +16,7 @@ const post = (await getEntryBySlug('blog', slug!))!;
 const { Content } = await post.render();
 
 const ISODate = post.data.date.toISOString();
+const isBilingual = post.data.language === 'en-zh';
 ---
 
 <Layout
@@ -32,20 +34,26 @@ const ISODate = post.data.date.toISOString();
     <span>
       {
         post.data.tags.map((tag) => (
-          <a
-            class="hover:text-blue-700 dark:hover:text-gray-500 transition-colors"
-            href={'/blog?tag=' + tag}
-          >
-            {tag}
-          </a>
+          <>
+            <a
+              class="hover:text-blue-700 dark:hover:text-gray-500 transition-colors"
+              href={'/blog?tag=' + tag}
+            >
+              {tag}
+            </a>
+            {post.data.tags.indexOf(tag) !== post.data.tags.length - 1 && (
+              <span>·</span>
+            )}
+          </>
         ))
       }
     </span>
   </div>
+  <LanguageSwitcher isBilingual={isBilingual} />
   <!-- TODO: Add scroll offset for header when click heading -->
   <!-- TODO: Scroll to heading if url contains heading id -->
   <article
-    class="prose dark:prose-invert max-w-none prose-a:break-words prose-a:prose-headings:decoration-transparent hover:prose-a:prose-headings:decoration-black prose-a:prose-headings:transition-colors"
+    class="prose prose-lg dark:prose-invert max-w-none prose-a:break-words prose-a:prose-headings:decoration-transparent hover:prose-a:prose-headings:decoration-black prose-a:prose-headings:transition-colors prose-p:text-black dark:prose-p:text-white"
   >
     <Content />
   </article>

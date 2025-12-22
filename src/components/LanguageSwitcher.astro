@@ -1,0 +1,119 @@
+---
+interface Props {
+  isBilingual: boolean;
+}
+
+const { isBilingual } = Astro.props;
+---
+
+{
+  isBilingual && (
+    <div class="flex justify-end mb-6 relative z-0">
+      <div class="relative inline-flex bg-gray-200 dark:bg-gray-700 rounded-lg p-1">
+        <div
+          id="lang-slider"
+          class="absolute top-1 bottom-1 bg-blue-500 rounded-md transition-all duration-300 ease-in-out"
+          style="width: calc(33.333% - 0.5rem); left: 0.25rem;"
+        />
+        <button
+          class="lang-btn relative z-10 px-4 py-1.5 rounded-md transition-colors font-medium text-sm"
+          data-lang="zh"
+        >
+          中
+        </button>
+        <button
+          class="lang-btn relative z-10 px-4 py-1.5 rounded-md transition-colors font-medium text-sm"
+          data-lang="en"
+        >
+          En
+        </button>
+        <button
+          class="lang-btn relative z-10 px-4 py-1.5 rounded-md transition-colors font-medium text-sm"
+          data-lang="bilingual"
+        >
+          En-中
+        </button>
+      </div>
+    </div>
+  )
+}
+
+<script>
+  function initLanguageSwitcher() {
+    const buttons = document.querySelectorAll('.lang-btn');
+    const slider = document.getElementById('lang-slider');
+    const enContent = document.querySelectorAll(
+      '[lang="en"]:not(giscus-widget)',
+    );
+    const zhContent = document.querySelectorAll(
+      '[lang="zh"]:not(giscus-widget)',
+    );
+
+    if (buttons.length === 0 || !slider) return;
+
+    // Get saved preference or default to bilingual
+    const savedLang = localStorage.getItem('blogLanguage') || 'bilingual';
+    switchLanguage(savedLang);
+
+    buttons.forEach((button, index) => {
+      button.addEventListener('click', () => {
+        const lang = button.getAttribute('data-lang');
+        if (lang) {
+          switchLanguage(lang);
+          localStorage.setItem('blogLanguage', lang);
+        }
+      });
+    });
+
+    function switchLanguage(lang: string) {
+      // Update button styles and slider position
+      buttons.forEach((btn, index) => {
+        if (btn.getAttribute('data-lang') === lang) {
+          btn.classList.add('text-white');
+          btn.classList.remove('text-gray-700', 'dark:text-gray-300');
+
+          // Move slider
+          const buttonWidth = (btn as HTMLElement).offsetWidth;
+          const buttonLeft = (btn as HTMLElement).offsetLeft;
+          slider.style.width = `${buttonWidth}px`;
+          slider.style.left = `${buttonLeft}px`;
+        } else {
+          btn.classList.remove('text-white');
+          btn.classList.add('text-gray-700', 'dark:text-gray-300');
+        }
+      });
+
+      // Update content visibility
+      switch (lang) {
+        case 'en':
+          enContent.forEach(
+            (el) => ((el as HTMLElement).style.display = 'block'),
+          );
+          zhContent.forEach(
+            (el) => ((el as HTMLElement).style.display = 'none'),
+          );
+          break;
+        case 'zh':
+          enContent.forEach(
+            (el) => ((el as HTMLElement).style.display = 'none'),
+          );
+          zhContent.forEach(
+            (el) => ((el as HTMLElement).style.display = 'block'),
+          );
+          break;
+        case 'bilingual':
+          enContent.forEach(
+            (el) => ((el as HTMLElement).style.display = 'block'),
+          );
+          zhContent.forEach(
+            (el) => ((el as HTMLElement).style.display = 'block'),
+          );
+          break;
+      }
+    }
+  }
+
+  // Initialize on page load
+  initLanguageSwitcher();
+  document.addEventListener('astro:after-swap', initLanguageSwitcher);
+</script>
