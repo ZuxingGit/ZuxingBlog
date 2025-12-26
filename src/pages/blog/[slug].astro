@@ -1,9 +1,14 @@
 ---
-import { getEntryBySlug } from 'astro:content';
+import { getEntryBySlug, getCollection } from 'astro:content';
 
 import Comment from '../../components/Comment.astro';
 import LanguageSwitcher from '../../components/LanguageSwitcher.astro';
 import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((p) => ({ params: { slug: p.slug } }));
+}
 
 const { slug } = Astro.params;
 const post = (await getEntryBySlug('blog', slug!))!;
