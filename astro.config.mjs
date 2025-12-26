@@ -1,7 +1,6 @@
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
-import vercel from '@astrojs/vercel/static';
-// changed to static adapter
+import vercel from '@astrojs/vercel/serverless';
 import { defineConfig } from 'astro/config';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSlug from 'rehype-slug';
@@ -13,8 +12,8 @@ import { pages } from './src/sitemap';
 export default defineConfig({
   site: SITE,
   integrations: [tailwind(), sitemap({ customPages: pages })],
-  output: 'static', // changed from 'server'
-  adapter: vercel(), // static adapter
+  output: 'server',
+  adapter: vercel({ analytics: true }),
   markdown: {
     rehypePlugins: [
       rehypeSlug,
