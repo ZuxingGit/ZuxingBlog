@@ -2,13 +2,13 @@
 import Layout from '../layouts/Layout.astro';
 
 const zeroOrOneOrTwo = () => {
-  return Math.round(Math.random()) * 2;
+  return Math.floor(Math.random() * 3);
 };
 
 const blog =
   ['B', 'b', '🅱'][zeroOrOneOrTwo()] +
   ['L', 'l', 'ℒ'][zeroOrOneOrTwo()] +
-  ['O', '𝓞', 'Ó'][zeroOrOneOrTwo()] +
+  ['O', '𝓞', 'ö'][zeroOrOneOrTwo()] +
   ['G', 'g', '𝕘'][zeroOrOneOrTwo()];
 ---
 
