@@ -12,7 +12,7 @@ import { pages } from './src/sitemap';
 export default defineConfig({
   site: SITE,
   integrations: [tailwind(), sitemap({ customPages: pages })],
-  output: 'server',
+  output: 'static',
   adapter: vercel(),
   markdown: {
     rehypePlugins: [
